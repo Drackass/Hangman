@@ -1,0 +1,43 @@
+words = [
+    "apple",
+    "banana",
+    "cat",
+    "dog",
+    "elephant",
+    "flower",
+    "green",
+    "house",
+    "ice cream",
+    "jazz",
+    "kite",
+    "lemon",
+    "mountain",
+    "notebook",
+    "orange",
+    "pizza",
+    "queen",
+    "rainbow",
+    "sun",
+    "tree",
+    "umbrella",
+    "volcano",
+    "watermelon",
+    "xylophone",
+    "yellow",
+    "zebra",
+    "hello world",
+    "lorem ipsum",
+    "sauzet leny"
+]
+
+numbers = {
+    1: 'one',
+    2: 'two',
+    3: 'three',
+    4: 'four',
+    5: 'five',
+    6: 'six',
+    7: 'seven',
+    8: 'eight',
+    9: 'nine'
+}
