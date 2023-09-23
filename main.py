@@ -23,26 +23,29 @@ allWords = words.words()
 
 # Path
 # Font
-Pathfont = "assets\\font\\font.ttf"
+pathFont = 'assets\\font\\'
+Pathfont = +'font.ttf'
 
 # Image
-PathIcon = 'assets\\heart.png'
-Pathcursor = "assets\\cursor.png"
-PathOldTV = "assets\\TV.png"
+pathAsset = 'assets\\'
+PathIcon = pathAsset+'heart.png'
+Pathcursor = pathAsset+'cursor.png'
+PathOldTV = pathAsset+'TV.png'
 
 # music & sound
-PathMusic = 'assets\\sound\\megalovania.mp3'
-PathStartSFX = 'assets\\sound\\snd_levelup.wav'
-PathMistakeSFX = 'assets\\sound\\snd_fall2.wav'
-PathGoodSFX = 'assets\\sound\\snd_tempbell.wav'
-PathBadSFX = 'assets\\sound\\snd_damage_c.wav'
-PathWinSFX = 'assets\\sound\\snd_dumbvictory.wav'
-PathLoseSFX = 'assets\\sound\\mus_f_newlaugh_low.ogg'
-PathIntroLetterSFX = 'assets\\sound\\mus_harpnoise.ogg'
-PathIntroHandSFX = 'assets\\sound\\snd_battlefall.wav'
-PathStartMenuSFX = 'assets\\sound\\startMenu.mp3'
-PathChangeLangSFX = 'assets\\sound\\snd_chug.wav'
-PathSelectMenuSFX = 'assets\\sound\\mus_sfx_eyeflash.wav'
+pathSFX = 'assets\\sound\\'
+PathMusic = pathSFX+'megalovania.mp3'
+PathStartSFX = pathSFX+'snd_levelup.wav'
+PathMistakeSFX = pathSFX+'snd_fall2.wav'
+PathGoodSFX = pathSFX+'snd_tempbell.wav'
+PathBadSFX = pathSFX+'snd_damage_c.wav'
+PathWinSFX = pathSFX+'snd_dumbvictory.wav'
+PathLoseSFX = pathSFX+'mus_f_newlaugh_low.ogg'
+PathIntroLetterSFX = pathSFX+'mus_harpnoise.ogg'
+PathIntroHandSFX = pathSFX+'snd_battlefall.wav'
+PathStartMenuSFX = pathSFX+'startMenu.mp3'
+PathChangeLangSFX = pathSFX+'snd_chug.wav'
+PathSelectMenuSFX = pathSFX+'mus_sfx_eyeflash.wav'
 
 # settings
 rootSize = (1280, 720)
