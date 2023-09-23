@@ -21,6 +21,8 @@ PathGoodSFX = 'assets\\sound\\snd_tempbell.wav'
 PathBadSFX = 'assets\\sound\\snd_damage_c.wav'
 PathWinSFX = 'assets\\sound\\snd_dumbvictory.wav'
 PathLoseSFX = 'assets\\sound\\mus_f_newlaugh_low.ogg'
+PathIntroLetterSFX = 'assets\\sound\\mus_harpnoise.ogg'
+PathIntroHandSFX = 'assets\\sound\\snd_battlefall.wav'
 
 # settings
 rootSize = (1280, 720)
@@ -116,12 +118,18 @@ music = pygame.mixer.music.load(PathMusic)
 def intro():
     setTimeSprite(60)
     curIndex = 0
+    pygame.mixer.Sound.play(pygame.mixer.Sound(PathIntroLetterSFX))
 
+    HandSFX = True
     while True:
         root.fill("black")
 
         ShowCorrectFrame(Spriteintro,curIndex)
         root.blit(Spriteintro[curIndex], (50, 0))
+
+        if curIndex == 24 and HandSFX:
+            pygame.mixer.Sound.play(pygame.mixer.Sound(PathIntroHandSFX))
+            HandSFX = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -146,7 +154,7 @@ def win(word):
 
         # Sprite
         ShowCorrectFrame(SpriteSansDance,curIndex)
-        root.blit(SpriteSansDance[curIndex], (390, 60))
+        root.blit(SpriteSansDance[curIndex], (400, 60))
 
         displayDecor(word,"you win, the word was:","orange",(640, 600))
 
