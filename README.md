@@ -10,7 +10,7 @@ pip install pygame
 ## How to Play
 1. **Running the Game:** To start the game, run the Python script provided in your local environment.
 ```
-python hangman.py
+python main.py
 ```
 2. **Game Rules:** You will be presented with a secret word, and you need to guess it one letter at a time. You have a limited number of chances to make incorrect guesses. The game will display underscores for each letter in the word that you need to guess.
 3. **Guessing Letters:** Use the keyboard to enter a letter. If the letter is in the word, it will be revealed; otherwise, you will lose a chance. Repeated guesses of the same letter are not penalized.
