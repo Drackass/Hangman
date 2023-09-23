@@ -32,10 +32,11 @@ PathWinSFX = 'assets\\sound\\snd_dumbvictory.wav'
 PathLoseSFX = 'assets\\sound\\mus_f_newlaugh_low.ogg'
 PathIntroLetterSFX = 'assets\\sound\\mus_harpnoise.ogg'
 PathIntroHandSFX = 'assets\\sound\\snd_battlefall.wav'
+PathStartMenuSFX = 'assets\\sound\\startMenu.mp3'
 
 # settings
 rootSize = (1280, 720)
-rootTitle = "Epitech Pre-Pool - HANGMAN"
+rootTitle = "Hangman Game"
 
 # Utils
 def display_word(letters): #return the secret word
@@ -120,10 +121,33 @@ SpriteSans = [pygame.image.load(f"assets\\sans\\{index}.gif") for index in range
 SpriteSansDance = [pygame.image.load(f"assets\\sans-dance\\{index}.gif") for index in range(0, 14)]
 # sans shrug
 SpriteSansShrug = [pygame.image.load(f"assets\\sans-shrug\\{index}.gif") for index in range(0, 13)]
+# press start
+SpritePressStart = [pygame.image.load(f"assets\\pressStart\\{index}.gif") for index in range(0, 8)]
 
-# music
-music = pygame.mixer.music.load(PathMusic)
+def PressStart():
+    setTimeSprite(70)
+    curIndex = 0
+    music = pygame.mixer.music.load(PathStartMenuSFX)
+    pygame.mixer.music.play(-1)
 
+    while True:
+        root.fill("black")
+
+        ShowCorrectFrame(SpritePressStart,curIndex)
+        root.blit(SpritePressStart[curIndex], (160, -120))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                # sys.exit()
+            elif event.type == CHANGE_IMAGE_EVENT:
+                curIndex = (curIndex + 1) % len(SpritePressStart)
+            elif event.type == pygame.KEYDOWN:
+                music = pygame.mixer.music.load(PathMusic)
+                pygame.mixer.music.play(-1)
+                main()
+
+        pygame.display.update()
 def intro():
     setTimeSprite(60)
     curIndex = 0
@@ -148,15 +172,13 @@ def intro():
                 if curIndex < len(Spriteintro)-1:
                     curIndex = curIndex + 1
                 else:
-                    pygame.mixer.music.play(-1)
-                    main()
+                    PressStart()
 
         pygame.display.update()
 
 def win(word):
     
     curIndex = 0
-    pygame.mixer.Sound.play(pygame.mixer.Sound(PathStartSFX))
 
     while True:
         root.fill("black")
@@ -203,6 +225,8 @@ def lose(word):
 
 def main():
     setTimeSprite(100)
+    pygame.mixer.Sound.play(pygame.mixer.Sound(PathStartSFX))
+
 
     # pick random word
     word = random.choice(allWords)
