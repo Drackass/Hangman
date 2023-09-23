@@ -18,3 +18,9 @@ languages = {
     "Italian": "it",
     "Portuguese": "pt",
 }
+
+startMenu = {
+    0:"Play",
+    1:"Language",
+    2:"Score"
+}
