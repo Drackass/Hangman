@@ -1,8 +1,17 @@
 # Import
-import pygame, random
+import pygame, random, nltk
 
 # data
 import data as data
+
+# download words
+nltk.download('words')
+
+# Import English word corpus list
+from nltk.corpus import words
+
+# get the list of words
+allWords = words.words()
 
 # Path
 # Font
@@ -196,7 +205,7 @@ def main():
     setTimeSprite(100)
 
     # pick random word
-    word = data.words[random.randint(0,len(data.words))-1]
+    word = random.choice(allWords)
 
     # Create a list of letters
     letters = []
@@ -289,7 +298,6 @@ def main():
                     if "_" not in currentWord:
                         pygame.mixer.Sound.play(pygame.mixer.Sound(PathWinSFX))
                         win(word)
-                        # break
 
                 if score == 0:
                     pygame.mixer.Sound.play(pygame.mixer.Sound(PathLoseSFX))
