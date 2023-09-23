@@ -1,4 +1,5 @@
 # Hangman Game with NLTK and Language Selection
+![alt text](/assets/mainGame.png)
 Introducing the Hangman game with enhanced features and language selection. This game is built using Python and Pygame and incorporates NLTK for a broader vocabulary. This version of the game is designed for easy setup using a `requirements.txt` file, making installation a breeze. You can enjoy playing the game with a wider vocabulary and language customization.  Let's get started!
 ## Prerequisites
 Before you start playing the game, make sure you have the following:
