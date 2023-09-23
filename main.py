@@ -1,8 +1,16 @@
 # Import
 import pygame, random, nltk
+from googletrans import Translator
+from unidecode import unidecode
 
 # data
 import data as data
+
+# new translator instance
+translator = Translator()
+
+# select the language
+# language = data.languages["French"]
 
 # download words
 nltk.download('words')
@@ -33,6 +41,7 @@ PathLoseSFX = 'assets\\sound\\mus_f_newlaugh_low.ogg'
 PathIntroLetterSFX = 'assets\\sound\\mus_harpnoise.ogg'
 PathIntroHandSFX = 'assets\\sound\\snd_battlefall.wav'
 PathStartMenuSFX = 'assets\\sound\\startMenu.mp3'
+PathChangeLangSFX = 'assets\\sound\\snd_chug.wav'
 
 # settings
 rootSize = (1280, 720)
@@ -94,6 +103,11 @@ def displayDecor(word,alertText,alertColor,alertCoord):
         bg = pygame.image.load(PathOldTV)
         bg = pygame.transform.scale(bg, (1280, 720))
         root.blit(bg, (0, 0))
+
+def drawRect(x,y,xSize,ySize,color):
+    x= x - (xSize/2)
+    y= y -(ySize/2)
+    pygame.draw.rect(root, color, pygame.Rect(x, y, xSize, ySize))
     
 # init
 pygame.init()
@@ -124,6 +138,53 @@ SpriteSansShrug = [pygame.image.load(f"assets\\sans-shrug\\{index}.gif") for ind
 # press start
 SpritePressStart = [pygame.image.load(f"assets\\pressStart\\{index}.gif") for index in range(0, 8)]
 
+language = "en"
+def LanguageMenu():
+    global language
+    selected = 0
+
+    while True:
+        root.fill("black")
+
+        # Title
+        PLAY_TEXT = get_font(45).render("Languages", True, "White")
+        PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 60))
+        root.blit(PLAY_TEXT, PLAY_RECT)
+
+        for i, key in enumerate(data.languages):
+            x = 640
+            y = (i * 80)+200
+
+            if selected == i:
+                drawRect(x,y,405,75,"white")
+                drawRect(x,y,400,70,"black")
+                language = data.languages[key]
+
+            # language name
+            PLAY_TEXT = get_font(25).render(key, True, "white")
+            PLAY_RECT = PLAY_TEXT.get_rect()
+            PLAY_RECT.center = (x, y)  # Définir les coordonnées du rectangle
+            root.blit(PLAY_TEXT, PLAY_RECT)
+
+    
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                # sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    selected = (selected-1)%len(data.languages)
+                    pygame.mixer.Sound.play(pygame.mixer.Sound(PathChangeLangSFX))
+
+                elif event.key == pygame.K_DOWN:
+                    selected = (selected+1)%len(data.languages)
+                    pygame.mixer.Sound.play(pygame.mixer.Sound(PathChangeLangSFX))
+
+                elif event.key == pygame.K_RETURN:
+                    PressStart()
+
+        pygame.display.update()
 def PressStart():
     setTimeSprite(70)
     curIndex = 0
@@ -172,13 +233,18 @@ def intro():
                 if curIndex < len(Spriteintro)-1:
                     curIndex = curIndex + 1
                 else:
-                    PressStart()
+                    LanguageMenu()
 
         pygame.display.update()
 
 def win(word):
+    global language
     
     curIndex = 0
+
+    alert = "you win, the word was:"
+    if language != "en":
+        alert = translator.translate("you win, the word was:", src='en', dest=language).text
 
     while True:
         root.fill("black")
@@ -187,7 +253,7 @@ def win(word):
         ShowCorrectFrame(SpriteSansDance,curIndex)
         root.blit(SpriteSansDance[curIndex], (400, 60))
 
-        displayDecor(word,"you win, the word was:","orange",(640, 600))
+        displayDecor(word,alert,"orange",(640, 600))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -202,6 +268,9 @@ def win(word):
 
 def lose(word):
     curIndex = 0
+    alert = "you lose, the word was:"
+    if language != "en":
+        alert = translator.translate("you lose, the word was:", src='en', dest=language).text
 
     while True:
         root.fill("black")
@@ -210,7 +279,7 @@ def lose(word):
         ShowCorrectFrame(SpriteSansShrug,curIndex)
         root.blit(SpriteSansShrug[curIndex], (385, 70))
 
-        displayDecor(word,"you lose, the word was:","red",(640, 600))
+        displayDecor(word,alert,"red",(640, 600))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -224,12 +293,21 @@ def lose(word):
         pygame.display.update()
 
 def main():
+    global language
     setTimeSprite(100)
     pygame.mixer.Sound.play(pygame.mixer.Sound(PathStartSFX))
 
 
     # pick random word
-    word = random.choice(allWords)
+    randWord = random.choice(allWords)
+    if language == "en":
+        theWord = randWord
+    else:
+        translation = translator.translate(randWord, src='en', dest=language)
+        theWord = translation.text if type(translation.text) is not None else randWord
+    word = unidecode(theWord)
+
+    word.replace("-", " ")
 
     # Create a list of letters
     letters = []
@@ -257,7 +335,11 @@ def main():
     score = 10
 
     letterUsed = []
-    alert = "Enter a Letter :"
+    if language != "en":
+        alert = translator.translate("Enter a Letter :", src='en', dest=language).text
+        predAlert = alert
+    else: 
+        alert = "Enter a Letter :"
 
     shake = 0
 
@@ -277,7 +359,13 @@ def main():
         pygame.draw.rect(root, "red", pygame.Rect(350+x, 595+y, 600, 20))
         pygame.draw.rect(root, "green", pygame.Rect(350+x, 595+y, a, 20))
 
+        if language != "en":
+            if predAlert != alert:
+                alert = translator.translate(alert, src='en', dest=language).text
+            predAlert = alert
+
         displayDecor(display_word(letters),alert,"White",(640, 570))
+
 
         shake /= 1.1
 
@@ -291,7 +379,10 @@ def main():
 
             elif event.type == pygame.KEYDOWN:
                 # Vérifier si une touche de lettre a été appuyée
-                if event.key >= pygame.K_a and event.key <= pygame.K_z:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.mixer.music.stop()
+                    LanguageMenu()
+                elif event.key >= pygame.K_a and event.key <= pygame.K_z:
                     playerInput = chr(event.key)
 
                     if playerInput in letterUsed:
@@ -323,9 +414,10 @@ def main():
                         pygame.mixer.Sound.play(pygame.mixer.Sound(PathWinSFX))
                         win(word)
 
-                if score == 0:
-                    pygame.mixer.Sound.play(pygame.mixer.Sound(PathLoseSFX))
-                    lose(word)
+                    if score == 0:
+                        pygame.mixer.Sound.play(pygame.mixer.Sound(PathLoseSFX))
+                        lose(word)
+                    
                 
         pygame.display.update()
 

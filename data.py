@@ -9,3 +9,12 @@ numbers = {
     8: 'eight',
     9: 'nine'
 }
+
+languages = {
+    "English": "en",
+    "French": "fr",
+    "Spanish": "es",
+    "German": "de",
+    "Italian": "it",
+    "Portuguese": "pt",
+}
