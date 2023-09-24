@@ -24,7 +24,7 @@ allWords = words.words()
 # Path
 # Font
 pathFont = 'assets\\font\\'
-Pathfont = +'font.ttf'
+Pathfont = pathFont+'font.ttf'
 
 # Image
 pathAsset = 'assets\\'
